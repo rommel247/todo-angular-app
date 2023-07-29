@@ -18,7 +18,6 @@ export class HousingLocationComponent implements OnInit {
   ngOnInit() {
 
     console.log('loading service api')
-    //this.apiService.getCountry();
     this.apiService.getSampleDataFromJson();
   }
 }

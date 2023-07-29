@@ -15,6 +15,7 @@ export class ApiService {
     }))
   }
 
+  //this for POST Http Action
   public createTodo(newtodo: TodoInterface): Observable<any>{
     var returntitle: string;
     const url = "http://localhost:3001/api/todo/getall";
