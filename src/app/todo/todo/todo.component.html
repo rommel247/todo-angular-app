@@ -1,1 +1,6 @@
-<p>todo works!</p>
+<span><input #todoInput (keyup.enter)="update(todoInput.value)"> <button (click)="update(todoInput.value)">Add</button></span>
+<div *ngIf="todo">
+    <ul *ngFor="let item of todo">
+        <li>{{item.title}}</li>
+    </ul>
+</div>
