@@ -1,6 +1,6 @@
-<span><input #todoInput (keyup.enter)="update(todoInput.value)"> <button (click)="update(todoInput.value)">Add</button></span>
-<div *ngIf="todo">
-    <ul *ngFor="let item of todo">
-        <li>{{item.title}}</li>
+<span><input [(ngModel)]="todo.title" (change)="update()"> <button (click)="update()">Add</button></span>
+<div *ngIf="todoList">
+    <ul *ngFor="let item of todoList">
+        <li id="{{item.id}}" (click)="openSelectedList({{item.id}})">{{item.title}}</li>
     </ul>
 </div>

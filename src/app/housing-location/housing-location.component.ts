@@ -19,21 +19,12 @@ export class HousingLocationComponent implements OnInit {
   ngOnInit() {
 
     console.log('loading service api')
-    this.apiService.getSampleDataFromJson().subscribe({
-        next: (todo: TodoModel) => {
-          //this.todo = todo; 
-          console.log(`todo ${todo}`)
-          console.log(todo)
-        },
-        error:(error) => {
-          console.error('Error fetching from API', error)
-        }  
-    });
-
     this.apiService.getAll().subscribe((resp: TodoModel[]) => {    
       this.todo = resp;
       console.log(this.todo);
     })
+
+
     
   }
 }

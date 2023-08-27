@@ -1,39 +1,32 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import {map} from 'rxjs/operators';
-import { TodoInterface} from '../shared/todo-interface';
-import {TodoModel} from '../shared/todo-model.model';
+import { map } from 'rxjs/operators';
+import { TodoInterface } from '../shared/todo-interface';
+import { TodoModel } from '../shared/todo-model.model';
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
+  //write local variable of string type
+  BaseApi: string = "http://localhost:3001/";
+  constructor(private httpClient: HttpClient) { }
 
-  constructor(private httpClient: HttpClient) { } 
-
-   getSampleDataFromJson(): Observable<TodoModel>{
-    return this.httpClient.get<any>('http://localhost:3001/api/todo/getall')
-    .pipe(
-      map((response: any) => {
-        return{
-          id: response.id,
-          title: response.title,
-          description: response.description,
-          isCompleted: response.isCompleted
-        } as TodoModel;
-      })
-    );
-  }
-
-  getAll(): Observable<TodoModel[]>{
-    return this.httpClient.get<any[]>('http://localhost:3001/api/todo/getall');
+  getAll(): Observable<TodoModel[]> {
+    return this.httpClient.get<any[]>(`${this.BaseApi}api/todo/getall`);
   }
 
   //this for POST Http Action
-  public createTodo(newtodo: TodoInterface): Observable<any>{
+  public createTodo(newtodo: TodoModel): Observable<any> {
     var returntitle: string;
-    const url = "http://localhost:3001/api/todo/getall";
-    const body = {title : newtodo.title,
-    description : newtodo.description}
-    return this.httpClient.post<TodoInterface>(url,body) }
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const url = `${this.BaseApi}api/todo/add`;
+    const body = {
+      title: newtodo.title,
+      description: newtodo.description
+    }
+    return this.httpClient.post<TodoModel>(url, body)
+  }
+
+
 }

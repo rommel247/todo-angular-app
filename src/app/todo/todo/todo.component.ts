@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {TodoModel} from  '../../shared/todo-model.model';
+import { TodoModel } from '../../shared/todo-model.model';
 //import first the service
-import {ApiService} from '../../services/api.service';
+import { ApiService } from '../../services/api.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'todo',
@@ -9,21 +10,31 @@ import {ApiService} from '../../services/api.service';
   styleUrls: ['./todo.component.css']
 })
 export class TodoComponent implements OnInit {
-  todo !: TodoModel[];
+  todoList !: TodoModel[];
+  todo = new TodoModel();
   //Dependecy Injection (DI)
-  constructor(private apiService: ApiService){}
-  
-  ngOnInit(): void {
+  constructor(private apiService: ApiService) { }
 
-    this.apiService.getAll().subscribe((resp: TodoModel[]) => {    
-      this.todo = resp;
-      console.log(this.todo);
+  ngOnInit(): void {
+    this.refreshList();
+  }
+
+  refreshList() {
+    this.apiService.getAll().subscribe((resp: TodoModel[]) => {
+      this.todoList = resp;
+      //console.log(this.todo);
     })
   }
 
-  update(value: string){
-    //add to database here
-    //refresh the this.todo
-console.log(value);
+  update() {
+    this.apiService.createTodo(this.todo).subscribe((resp: TodoModel) => {
+      this.todo = resp;
+      console.info(`This the result from POST ${resp}`);
+      this.refreshList();
+    });
+  }
+
+  openSelectedList(id: string=""){
+    console.log(id);
   }
 }
