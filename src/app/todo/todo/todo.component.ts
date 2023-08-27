@@ -35,6 +35,6 @@ export class TodoComponent implements OnInit {
   }
 
   openSelectedList(id: string=""){
-    console.log(id);
+    console.log(`This is the TodoList being clicked ${id}`);
   }
 }
